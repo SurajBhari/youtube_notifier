@@ -90,6 +90,7 @@ while True:
                     # write video_id to videos.txt
                     with open("videos.txt", "a") as f:
                         f.write(video_id+"\n")
+                    sent_to_count = 0
                     # send notification to all subscribers
                     for sub in data["subs"][channel]:
                         print(sub)
@@ -109,6 +110,8 @@ while True:
                             data["subs"][channel].remove(sub)
                         except Exception as e:
                             print(e)
-
                         else:
                             print("sent")
+                            sent_to_count += 1
+                    if sent_to_count > 0:
+                        send_discord_webhook(f"Sent notification to {sent_to_count} subscribers of {channel_name} \n {json.dumps(_data, indent=4)}")
