@@ -7,19 +7,16 @@ from bs4 import BeautifulSoup
 import config
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = app.secret_key
+app.config['SECRET_KEY'] = config.secret_key
 
 
-VAPID_CLAIMS = {
-    "sub": "mailto:develop@raturi.in"
-}
 
 def send_web_push(subscription_information, message_body):
     return webpush(
         subscription_info=subscription_information,
         data=message_body,
-        vapid_private_key=app.private_key,
-        vapid_claims=app.claims
+        vapid_private_key=config.private_key,
+        vapid_claims=config.claims
     )
 
 @app.route('/')
@@ -53,7 +50,7 @@ def subscription():
         GET returns vapid public key which clients uses to send around push notification
     """
     if request.method == "GET":
-        return Response(response=json.dumps({"public_key": app.public_key}),
+        return Response(response=json.dumps({"public_key": config.public_key}),
             headers={"Access-Control-Allow-Origin": "*"}, content_type="application/json")
     
     subscription_token = request.get_json("subscription_token")
