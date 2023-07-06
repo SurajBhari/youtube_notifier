@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ data['channelname']}}</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.2.1/material.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+</head>
+
+<body>
+    <main>
+        <center>
+        <h2> <a href="{{data['channelurl']}}"> {{data['channelname']}}</a></h2>
+        <p>
+            <img width="200" height="200" src= "{{data["channelimage"]}}" alt="Channel Image" class="channel-image"></p> 
+            <p>
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="subscribeUser()">
+                Enable Notification
+            </button>
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="unsubscribeUser()">
+                Disable Notification
+            </button>
+            <h1 id="status">Not Subscribed</h1>
+        </p>
+    </center>
+    </main>
+
+    <script src="{{ url_for('static',filename='main.js') }}"></script>
+    <script src="https://code.getmdl.io/1.2.1/material.min.js"></script>
+</body>
+
+
+
+</html>
