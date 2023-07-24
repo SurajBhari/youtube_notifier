@@ -1,6 +1,6 @@
 import json, os
 
-from flask import request, Response, render_template, jsonify, Flask
+from flask import request, Response, render_template, jsonify, Flask, redirect
 from pywebpush import webpush, WebPushException
 from requests import get
 from bs4 import BeautifulSoup
@@ -19,6 +19,13 @@ def send_web_push(subscription_information, message_body):
         vapid_claims=config.claims
     )
 
+@app.before_request
+def before_request():
+    if not request.is_secure:
+        url = request.url.replace('http://', 'https://', 1)
+        code = 301
+        return redirect(url, code=code)
+    
 @app.route('/')
 def index():
     return "hello world"
@@ -117,4 +124,5 @@ def unsubscription():
     return Response(status=201, mimetype="application/json")
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=9999)
+    app.run(ssl_context=('certificate.crt', 'private.key'), host='0.0.0.0', port=9999)
+
